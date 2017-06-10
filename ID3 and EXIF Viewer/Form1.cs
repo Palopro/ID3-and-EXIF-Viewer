@@ -11,23 +11,48 @@ namespace ID3_and_EXIF_Viewer
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TagLib.File file = TagLib.File.Create("01. Take This Life.mp3");
-            String title = file.Tag.Title;
-            String [] artist = file.Tag.Performers;
-            String album = file.Tag.Album;
-            String length = file.Properties.Duration.ToString();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
 
-            label1.Text = title;
-            label2.Text = album;
-            label3.Text = length;
-            for(int i=0; i<artist.Length; i++)
+            openFileDialog.Filter = "аудио файлы (*.mp3)|*.mp3";
+            openFileDialog.RestoreDirectory = true;
+
+            if(openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                label4.Text = artist[i];
-            }
-            
+                try
+                {
+                    if (openFileDialog.OpenFile() != null)
+                    {
+                        string path=openFileDialog.FileName.ToString();
+                        TagLib.File file = TagLib.File.Create(path);
+                        String[] artist = file.Tag.Performers;
+                        String album = file.Tag.Album;
+                        String title = file.Tag.Title;
+                        String[] genres = file.Tag.Genres;
+                        String year = file.Tag.Year.ToString();
+                        
+                        String length = file.Properties.Duration.ToString();
 
+                        foreach ( string art in artist)
+                            textBox1.Text = art;
+
+                        textBox2.Text = album;
+                        textBox3.Text = title;
+
+                        foreach (string genre in genres)
+                            textBox4.Text = genre;
+
+                        textBox5.Text = year;
+                        textBox6.Text = length;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка чтения файла!");
+                    Console.WriteLine(ex.StackTrace);
+                }
+            }
         }
     }
 }
