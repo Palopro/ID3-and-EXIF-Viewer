@@ -56,6 +56,7 @@
             this.label1.Size = new System.Drawing.Size(74, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Исполнитель";
+            this.label1.Visible = false;
             // 
             // label2
             // 
@@ -65,6 +66,7 @@
             this.label2.Size = new System.Drawing.Size(46, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Альбом";
+            this.label2.Visible = false;
             // 
             // label3
             // 
@@ -74,6 +76,7 @@
             this.label3.Size = new System.Drawing.Size(57, 13);
             this.label3.TabIndex = 2;
             this.label3.Text = "Название";
+            this.label3.Visible = false;
             // 
             // label4
             // 
@@ -83,6 +86,7 @@
             this.label4.Size = new System.Drawing.Size(41, 13);
             this.label4.TabIndex = 3;
             this.label4.Text = "Номер";
+            this.label4.Visible = false;
             // 
             // menuStrip1
             // 
@@ -91,7 +95,7 @@
             this.фотоToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(313, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(309, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -122,15 +126,17 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(155, 20);
             this.textBox1.TabIndex = 5;
+            this.textBox1.Visible = false;
             this.textBox1.TextChanged += new System.EventHandler(this.TextBox1_TextChanged);
             // 
             // textBox2
             // 
-            this.textBox2.Cursor = System.Windows.Forms.Cursors.SizeNESW;
+            this.textBox2.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.textBox2.Location = new System.Drawing.Point(113, 79);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(155, 20);
             this.textBox2.TabIndex = 6;
+            this.textBox2.Visible = false;
             this.textBox2.TextChanged += new System.EventHandler(this.TextBox2_TextChanged);
             // 
             // textBox3
@@ -139,6 +145,7 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(155, 20);
             this.textBox3.TabIndex = 7;
+            this.textBox3.Visible = false;
             this.textBox3.TextChanged += new System.EventHandler(this.TextBox3_TextChanged);
             // 
             // textBox4
@@ -147,6 +154,7 @@
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(155, 20);
             this.textBox4.TabIndex = 8;
+            this.textBox4.Visible = false;
             this.textBox4.TextChanged += new System.EventHandler(this.TextBox4_TextChanged);
             // 
             // label5
@@ -157,6 +165,7 @@
             this.label5.Size = new System.Drawing.Size(36, 13);
             this.label5.TabIndex = 9;
             this.label5.Text = "Жанр";
+            this.label5.Visible = false;
             // 
             // textBox5
             // 
@@ -164,6 +173,7 @@
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(155, 20);
             this.textBox5.TabIndex = 10;
+            this.textBox5.Visible = false;
             this.textBox5.TextChanged += new System.EventHandler(this.TextBox5_TextChanged);
             // 
             // buttonSave
@@ -185,6 +195,7 @@
             this.label6.Size = new System.Drawing.Size(25, 13);
             this.label6.TabIndex = 12;
             this.label6.Text = "Год";
+            this.label6.Visible = false;
             // 
             // textBox6
             // 
@@ -192,12 +203,13 @@
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(155, 20);
             this.textBox6.TabIndex = 11;
+            this.textBox6.Visible = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(313, 318);
+            this.ClientSize = new System.Drawing.Size(309, 326);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.textBox6);

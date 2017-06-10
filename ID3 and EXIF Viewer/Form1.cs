@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace ID3_and_EXIF_Viewer
 {
@@ -23,13 +24,15 @@ namespace ID3_and_EXIF_Viewer
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+
+                SetVisibleTextBox();
+
                 try
                 {
                     if (openFileDialog.OpenFile() != null)
                     {
                         foreach (string path in openFileDialog.FileNames)
                         {
-
                             Mp3Lib.Mp3File file = new Mp3Lib.Mp3File(path);
 
                             fileName = path;
@@ -43,11 +46,10 @@ namespace ID3_and_EXIF_Viewer
 
                             textBox1.Text = artist;
                             textBox2.Text = album;
-                            textBox3.Text = song;
+                            textBox3.Text += song;
                             textBox4.Text = num;
                             textBox5.Text = genres;
                             textBox6.Text = year;
-
                         }
                     }
                     else
@@ -62,6 +64,33 @@ namespace ID3_and_EXIF_Viewer
                 }
             }
             openFileDialog.Dispose();
+        }
+
+        private void SetVisibleTextBox()
+        {
+            label1.Visible = true;
+            label1.Text = "Исполнитель";
+            textBox1.Visible = true;
+
+            label2.Visible = true;
+            label2.Text = "Альбом";
+            textBox2.Visible = true;
+
+            label3.Visible = true;
+            label3.Text = "Название";
+            textBox3.Visible = true;
+
+            label4.Visible = true;
+            label4.Text = "Номер";
+            textBox4.Visible = true;
+
+            label5.Visible = true;
+            label5.Text = "Жанр";
+            textBox5.Visible = true;
+
+            label6.Visible = true;
+            label6.Text = "Год";
+            textBox6.Visible = true;
         }
 
         private void ShowSaveButton()
