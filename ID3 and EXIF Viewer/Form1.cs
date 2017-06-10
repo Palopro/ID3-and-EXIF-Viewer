@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Drawing;
+using Mp3Lib;
 
 namespace ID3_and_EXIF_Viewer
 {
@@ -24,19 +24,20 @@ namespace ID3_and_EXIF_Viewer
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-
                 SetVisibleTextBox();
 
                 try
                 {
-                    if (openFileDialog.OpenFile() != null)
+                    System.IO.Stream fileStream = openFileDialog.OpenFile();
+
+                    using (System.IO.StreamReader reader = new System.IO.StreamReader(fileStream))
                     {
                         foreach (string path in openFileDialog.FileNames)
                         {
-                            Mp3Lib.Mp3File file = new Mp3Lib.Mp3File(path);
+                            Mp3File file = new Mp3File(path);
 
                             fileName = path;
-                   
+
                             string artist = file.TagHandler.Artist;
                             string album = file.TagHandler.Album;
                             string song = file.TagHandler.Song;
@@ -52,20 +53,20 @@ namespace ID3_and_EXIF_Viewer
                             textBox6.Text = year;
                         }
                     }
-                    else
-                    {
-                        MessageBox.Show("Файл не существует!");
-                    }
+
+                    fileStream.Close();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     MessageBox.Show("Ошибка чтения файла!");
-                    Console.WriteLine(ex.StackTrace);
                 }
             }
-            openFileDialog.Dispose();
+            else
+            {
+                MessageBox.Show("Ошибка чтения информации");
+            }
         }
-
+    
         private void SetVisibleTextBox()
         {
             label1.Visible = true;
@@ -125,27 +126,39 @@ namespace ID3_and_EXIF_Viewer
 
         private void ButtonSave_Click(object sender, EventArgs e)
         {
-            string artist = textBox1.Text;
-            string album = textBox2.Text;
-            string title = textBox3.Text;
-            string genre = textBox4.Text;
-            string year = textBox5.Text;
- 
             if (fileName != null)
             {
+                Mp3File targetFile = new Mp3File(@fileName);
+
                 try
                 {
-                    // TO-DO
+                    string artist = textBox1.Text;
+                    string album = textBox2.Text;
+                    string song = textBox3.Text;
+                    string num = textBox4.Text;
+                    string genre = textBox5.Text;
+                    string year = textBox6.Text;
+
+                    targetFile.TagHandler.Artist = artist;
+                    targetFile.TagHandler.Album = album;
+                    targetFile.TagHandler.Song = song;
+                    targetFile.TagHandler.Track = num;
+                    targetFile.TagHandler.Genre = genre;
+                    targetFile.TagHandler.Year = year;
+                    
+                    targetFile.UpdatePacked();
+                    MessageBox.Show("Сохранено");
                 }
                 catch
                 {
-
+                    MessageBox.Show("Ошибка сохранения");
                 }
             }
             else
             {
-                MessageBox.Show(fileName);
+                MessageBox.Show("Нет файла");
             }     
         }
+
     }
 }
