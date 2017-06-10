@@ -12,13 +12,14 @@ namespace ID3_and_EXIF_Viewer
 
         string fileName;
 
-        private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ОткрытьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-
-            openFileDialog.Multiselect = true;
-            openFileDialog.Filter = "аудио файлы (*.mp3)|*.mp3";
-            openFileDialog.RestoreDirectory = true;
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                Multiselect = true,
+                Filter = "аудио файлы (*.mp3)|*.mp3",
+                RestoreDirectory = true
+            };
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -28,29 +29,25 @@ namespace ID3_and_EXIF_Viewer
                     {
                         foreach (string path in openFileDialog.FileNames)
                         {
-                            TagLib.File file = TagLib.File.Create(path);
+
+                            Mp3Lib.Mp3File file = new Mp3Lib.Mp3File(path);
 
                             fileName = path;
+                   
+                            string artist = file.TagHandler.Artist;
+                            string album = file.TagHandler.Album;
+                            string song = file.TagHandler.Song;
+                            string num = file.TagHandler.Track;
+                            string genres = file.TagHandler.Genre;
+                            string year = file.TagHandler.Year;
 
-                            string[] artist = file.Tag.Performers;
-
-                            string album = file.Tag.Album;
-                            string title = file.Tag.Title;
-                            string[] genres = file.Tag.Genres;
-                            string year = file.Tag.Year.ToString();
-                            string length = file.Properties.Duration.ToString();
-
-                            foreach (string art in artist)
-                                textBox1.Text = art;
-
+                            textBox1.Text = artist;
                             textBox2.Text = album;
-                            textBox3.Text = title;
+                            textBox3.Text = song;
+                            textBox4.Text = num;
+                            textBox5.Text = genres;
+                            textBox6.Text = year;
 
-                            foreach (string genre in genres)
-                                textBox4.Text = genre;
-
-                            textBox5.Text = year;
-                            textBox6.Text = length;
                         }
                     }
                     else
@@ -64,68 +61,62 @@ namespace ID3_and_EXIF_Viewer
                     Console.WriteLine(ex.StackTrace);
                 }
             }
+            openFileDialog.Dispose();
         }
 
-        private void showSaveButton()
+        private void ShowSaveButton()
         {
             buttonSave.Visible = true;
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void TextBox1_TextChanged(object sender, EventArgs e)
         {
-            showSaveButton();
+            ShowSaveButton();
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
+        private void TextBox2_TextChanged(object sender, EventArgs e)
         {
-            showSaveButton();
+            ShowSaveButton();
         }
 
-        private void textBox3_TextChanged(object sender, EventArgs e)
+        private void TextBox3_TextChanged(object sender, EventArgs e)
         {
-            showSaveButton();
+            ShowSaveButton();
         }
 
-        private void textBox4_TextChanged(object sender, EventArgs e)
+        private void TextBox4_TextChanged(object sender, EventArgs e)
         {
-            showSaveButton();
+            ShowSaveButton();
         }
 
-        private void textBox5_TextChanged(object sender, EventArgs e)
+        private void TextBox5_TextChanged(object sender, EventArgs e)
         {
-            showSaveButton();
+            ShowSaveButton();
         }
 
-        private void buttonSave_Click(object sender, EventArgs e)
+        private void ButtonSave_Click(object sender, EventArgs e)
         {
             string artist = textBox1.Text;
             string album = textBox2.Text;
             string title = textBox3.Text;
             string genre = textBox4.Text;
             string year = textBox5.Text;
-            string duration = textBox6.Text;
-
-
-            MessageBox.Show(fileName);
+ 
             if (fileName != null)
             {
                 try
                 {
-                    TagLib.File file = TagLib.File.Create(fileName);
-                    file.Tag.Year = Convert.ToUInt32(year);
-                    file.Save();
+                    // TO-DO
                 }
-                catch (Exception ex)
+                catch
                 {
-                    MessageBox.Show("Ошибка сохранения");
+
                 }
             }
             else
             {
                 MessageBox.Show(fileName);
-            }
-
-           
+            }     
         }
     }
 }
