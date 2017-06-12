@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Drawing;
 using Mp3Lib;
 
 namespace ID3_and_EXIF_Viewer
@@ -44,6 +45,7 @@ namespace ID3_and_EXIF_Viewer
                             string num = file.TagHandler.Track;
                             string genres = file.TagHandler.Genre;
                             string year = file.TagHandler.Year;
+                            Image thumb = file.TagHandler.Picture;
 
                             textBox1.Text = artist;
                             textBox2.Text = album;
@@ -51,6 +53,8 @@ namespace ID3_and_EXIF_Viewer
                             textBox4.Text = num;
                             textBox5.Text = genres;
                             textBox6.Text = year;
+
+                            pictureBox1.Image = thumb;
                         }
                     }
 
@@ -92,6 +96,13 @@ namespace ID3_and_EXIF_Viewer
             label6.Visible = true;
             label6.Text = "Год";
             textBox6.Visible = true;
+
+            label7.Visible = true;
+            label7.Text = "ID3";
+ 
+            pictureBox1.Visible = true;
+            pictureBox1.Size = new Size(120,120);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
         private void ShowSaveButton()
