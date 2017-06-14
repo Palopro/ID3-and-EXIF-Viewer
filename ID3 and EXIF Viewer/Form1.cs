@@ -141,7 +141,7 @@ namespace ID3_and_EXIF_Viewer
             textBox6.Clear();
 
             label6.Visible = true;
-            label6.Text = "Висота";
+            label6.Text = "Высота";
             textBox6.Visible = true;
             textBox6.Clear();
 
@@ -231,6 +231,7 @@ namespace ID3_and_EXIF_Viewer
             {
                 label7.Text = dlg.FileName;
                 getExifData();
+                buttonSave.Visible = false;
             }
         }
 
