@@ -171,5 +171,26 @@ namespace ID3_and_EXIF_Viewer
             }     
         }
 
+
+        private void открытьToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                Multiselect = true,
+                Filter = "аудио файлы (*.mp3)|*.mp3",
+                RestoreDirectory = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                SetVisibleTextBox();
+                //код 
+                
+            }
+            else
+            {
+                MessageBox.Show("Ошибка чтения информации");
+            }
+        }
+
     }
 }
