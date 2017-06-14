@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using System.Drawing;
 using Mp3Lib;
-
+using ExifLib;
 namespace ID3_and_EXIF_Viewer
 {
     public partial class Form1 : Form
@@ -176,21 +176,17 @@ namespace ID3_and_EXIF_Viewer
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
                 Multiselect = true,
-                Filter = "аудио файлы (*.mp3)|*.mp3",
-                RestoreDirectory = true
+                Filter = "изображения (*.jpg; *.jpeg)|*.jpg;*.jpeg",
+                RestoreDirectory = true 
             };
+            
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 SetVisibleTextBox();
-                //код 
-                
-            }
-            else
-            {
-                MessageBox.Show("Ошибка чтения информации");
+                //код
+ 
             }
         }
-
     }
 }
