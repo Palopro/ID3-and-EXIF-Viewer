@@ -238,7 +238,7 @@
             this.открытьToolStripMenuItem1.Name = "открытьToolStripMenuItem1";
             this.открытьToolStripMenuItem1.Size = new System.Drawing.Size(152, 24);
             this.открытьToolStripMenuItem1.Text = "Открыть";
-            this.открытьToolStripMenuItem1.Click += new System.EventHandler(this.открытьToolStripMenuItem1_Click);
+            this.открытьToolStripMenuItem1.Click += new System.EventHandler(this.ОткрытьToolStripMenuItem1_Click);
             // 
             // Form1
             // 
