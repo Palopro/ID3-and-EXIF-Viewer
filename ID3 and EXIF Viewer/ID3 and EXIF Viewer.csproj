@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ExifLib">
+      <HintPath>..\..\Новая папка\Exiflib\bin\Debug\ExifLib.dll</HintPath>
+    </Reference>
     <Reference Include="Id3Lib">
       <HintPath>..\..\Id3Lib.dll</HintPath>
     </Reference>

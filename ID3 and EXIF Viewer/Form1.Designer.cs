@@ -47,7 +47,7 @@
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.открытьToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.открытььToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -121,11 +121,10 @@
             // фотоToolStripMenuItem
             // 
             this.фотоToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.открытьToolStripMenuItem1});
+            this.открытььToolStripMenuItem});
             this.фотоToolStripMenuItem.Name = "фотоToolStripMenuItem";
             this.фотоToolStripMenuItem.Size = new System.Drawing.Size(56, 24);
             this.фотоToolStripMenuItem.Text = "Фото";
-            
             // 
             // textBox1
             // 
@@ -233,12 +232,12 @@
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label7.Visible = false;
             // 
-            // открытьToolStripMenuItem1
+            // открытььToolStripMenuItem
             // 
-            this.открытьToolStripMenuItem1.Name = "открытьToolStripMenuItem1";
-            this.открытьToolStripMenuItem1.Size = new System.Drawing.Size(152, 24);
-            this.открытьToolStripMenuItem1.Text = "Открыть";
-            this.открытьToolStripMenuItem1.Click += new System.EventHandler(this.ОткрытьToolStripMenuItem1_Click);
+            this.открытььToolStripMenuItem.Name = "открытььToolStripMenuItem";
+            this.открытььToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.открытььToolStripMenuItem.Text = "Открыть";
+            this.открытььToolStripMenuItem.Click += new System.EventHandler(this.открытььToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -294,7 +293,7 @@
         private System.Windows.Forms.TextBox textBox6;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ToolStripMenuItem открытьToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem открытььToolStripMenuItem;
     }
 }
 

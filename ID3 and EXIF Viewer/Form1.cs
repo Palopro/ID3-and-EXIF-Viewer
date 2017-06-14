@@ -2,6 +2,12 @@
 using System.Windows.Forms;
 using System.Drawing;
 using Mp3Lib;
+using System.Drawing.Imaging;
+using System.IO;
+using ExifLib;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ID3_and_EXIF_Viewer
 {
@@ -25,7 +31,7 @@ namespace ID3_and_EXIF_Viewer
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                SetVisibleTextBox();
+                SetID();
 
                 try
                 {
@@ -71,7 +77,7 @@ namespace ID3_and_EXIF_Viewer
             }
         }
     
-        private void SetVisibleTextBox()
+        private void SetID()
         {
             label1.Visible = true;
             label1.Text = "Исполнитель";
@@ -102,6 +108,40 @@ namespace ID3_and_EXIF_Viewer
  
             pictureBox1.Visible = true;
             pictureBox1.Size = new Size(120,120);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+        }
+
+        private void SetEXIF()
+        {
+            label1.Visible = true;
+            label1.Text = "Производитель";
+            textBox1.Visible = true;
+
+            label2.Visible = true;
+            label2.Text = "Устройство";
+            textBox2.Visible = true;
+
+            label3.Visible = true;
+            label3.Text = "Камера";
+            textBox3.Visible = true;
+
+            label4.Visible = true;
+            label4.Text = "Дата и время";
+            textBox4.Visible = true;
+
+            label5.Visible = true;
+            label5.Text = "Ширина";
+            textBox5.Visible = true;
+
+            label6.Visible = true;
+            label6.Text = "Висота";
+            textBox6.Visible = true;
+
+            label7.Visible = true;
+           
+
+            pictureBox1.Visible = true;
+            pictureBox1.Size = new Size(220, 320);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
@@ -171,26 +211,112 @@ namespace ID3_and_EXIF_Viewer
             }     
         }
 
-        private void ОткрытьToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void открытььToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog()
-            {
-                Multiselect = true,
-                Filter = "аудио файлы (*.mp3)|*.mp3",
-                RestoreDirectory = true
-            };
+            label7.Visible = true;
+            OpenFileDialog dlg = new OpenFileDialog { FileName = label7.Text, Filter = "JPEG Images (*.jpg)|*.jpg" };
 
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            if (dlg.ShowDialog() == DialogResult.OK)
             {
-                SetVisibleTextBox();
-                //код 
-                
-            }
-            else
-            {
-                MessageBox.Show("Ошибка чтения информации");
+                label7.Text = dlg.FileName;
+                getExifData();
             }
         }
+
+        private void getExifData()
+        {
+            
+            if (!File.Exists(label7.Text))
+            {
+                MessageBox.Show(this, "Please enter a valid filename", "File not found", MessageBoxButtons.OK);
+                return;
+            }
+
+            try
+            {
+                SetEXIF();
+                using (var reader = new ExifReader(label7.Text))
+                {
+                    // Get the image thumbnail (if present)
+                    var thumbnailBytes = reader.GetJpegThumbnailBytes();
+
+                    if (thumbnailBytes == null)
+                        pictureBox1.Image = null;
+                    else
+                    {
+                        using (var stream = new MemoryStream(thumbnailBytes))
+                            pictureBox1.Image = Image.FromStream(stream);
+                    }
+
+                    String make;
+                    reader.GetTagValue<String>(ExifTags.Make, out make);
+                    textBox1.Text = make;
+
+                    String model;
+                    reader.GetTagValue<String>(ExifTags.Model, out model);
+                    textBox2.Text = model;
+
+                    String lensModel;
+                    reader.GetTagValue<String>(ExifTags.LensModel, out lensModel);
+                    textBox3.Text = lensModel;
+
+                    DateTime date;
+                    reader.GetTagValue<DateTime>(ExifTags.DateTimeOriginal, out date);
+                    textBox4.Text =  date.ToString();
+
+                    UInt32 pixelX;
+                    reader.GetTagValue<UInt32>(ExifTags.PixelXDimension, out pixelX);
+                    textBox5.Text = pixelX.ToString()+" пикселей";
+
+                    UInt32 pixelY;
+                    reader.GetTagValue<UInt32>(ExifTags.PixelYDimension, out pixelY);
+                    textBox6.Text = pixelY.ToString() + " пикселей";
+                    
+
+                   
+                    
+                    // To read a single field, use code like this:
+                    /*
+                    DateTime datePictureTaken;
+                    if (reader.GetTagValue(ExifTags.DateTimeOriginal, out datePictureTaken))
+                    {
+                        MessageBox.Show(this, string.Format("The picture was taken on {0}", datePictureTaken), "Image information", MessageBoxButtons.OK);
+                    }
+                    */
+
+                    // Parse through all available fields and generate key-value labels
+                  /*  var props = Enum.GetValues(typeof(ExifTags)).Cast<ushort>().Select(tagID =>
+                    {
+                        object val;
+                        if (reader.GetTagValue(tagID, out val))
+                        {
+                            // Special case - some doubles are encoded as TIFF rationals. These
+                            // items can be retrieved as 2 element arrays of {numerator, denominator}
+                            if (val is double)
+                            {
+                                int[] rational;
+                                if (reader.GetTagValue(tagID, out rational))
+                                    val = string.Format("{0} ({1}/{2})", val, rational[0], rational[1]);
+                            }
+
+                            //return string.Format("{0}: {1}", Enum.GetName(typeof(ExifTags), tagID), RenderTag(val));
+                        }
+
+                        return null;
+
+                    }).Where(x => x != null).ToArray();
+
+                  //  txtFields.Text = string.Join("\r\n", props);*/
+                }
+            }
+            catch (Exception ex)
+            {
+                // Something didn't work!
+                MessageBox.Show(this, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        
 
     }
 }
