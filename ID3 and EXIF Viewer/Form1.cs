@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using System.Drawing;
 using Mp3Lib;
-using ExifLib;
+
 namespace ID3_and_EXIF_Viewer
 {
     public partial class Form1 : Form
@@ -25,7 +25,7 @@ namespace ID3_and_EXIF_Viewer
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                SetVisibleTextBox();
+                SetID();
 
                 try
                 {
@@ -71,7 +71,7 @@ namespace ID3_and_EXIF_Viewer
             }
         }
     
-        private void SetVisibleTextBox()
+        private void SetID()
         {
             label1.Visible = true;
             label1.Text = "Исполнитель";
@@ -102,6 +102,40 @@ namespace ID3_and_EXIF_Viewer
  
             pictureBox1.Visible = true;
             pictureBox1.Size = new Size(120,120);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+        }
+
+        private void SetEXIF()
+        {
+            label1.Visible = true;
+            label1.Text = "Производитель";
+            textBox1.Visible = true;
+
+            label2.Visible = true;
+            label2.Text = "Устройство";
+            textBox2.Visible = true;
+
+            label3.Visible = true;
+            label3.Text = "Камера";
+            textBox3.Visible = true;
+
+            label4.Visible = true;
+            label4.Text = "Дата и время";
+            textBox4.Visible = true;
+
+            label5.Visible = true;
+            label5.Text = "Ширина";
+            textBox5.Visible = true;
+
+            label6.Visible = true;
+            label6.Text = "Висота";
+            textBox6.Visible = true;
+
+            label7.Visible = true;
+           
+
+            pictureBox1.Visible = true;
+            pictureBox1.Size = new Size(220, 320);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
@@ -171,22 +205,29 @@ namespace ID3_and_EXIF_Viewer
             }     
         }
 
-        private void ОткрытьToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void открытььToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog()
+            label7.Visible = true;
+            OpenFileDialog dlg = new OpenFileDialog { FileName = label7.Text, Filter = "JPEG Images (*.jpg)|*.jpg" };
+
+            if (dlg.ShowDialog() == DialogResult.OK)
             {
                 Multiselect = true,
-                Filter = "изображения (*.jpg; *.jpeg)|*.jpg;*.jpeg",
-                RestoreDirectory = true 
+                Filter = "аудио файлы (*.mp3)|*.mp3",
+                RestoreDirectory = true
             };
-            
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 SetVisibleTextBox();
-                //код
- 
+                //код 
+                
+            }
+            else
+            {
+                MessageBox.Show("Ошибка чтения информации");
             }
         }
+
     }
 }
