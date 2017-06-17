@@ -32,14 +32,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Id3Lib">
-      <HintPath>..\..\Id3Lib.dll</HintPath>
+    <Reference Include="ExifLib, Version=1.7.0.0, Culture=neutral, PublicKeyToken=30284005913968db, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExifLib.1.7.0.0\lib\net45\ExifLib.dll</HintPath>
     </Reference>
-    <Reference Include="Mp3Lib">
-      <HintPath>..\..\Mp3Lib.dll</HintPath>
+    <Reference Include="Id3Lib, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Mp3Lib\Id3Lib.dll</HintPath>
     </Reference>
-    <Reference Include="SharpZipLib">
-      <HintPath>..\..\SharpZipLib.dll</HintPath>
+    <Reference Include="Mp3Lib, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Mp3Lib\Mp3Lib.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpZipLib, Version=0.4.0.0, Culture=neutral, PublicKeyToken=fbebc9694da332b7">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Mp3Lib\SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -75,6 +81,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
