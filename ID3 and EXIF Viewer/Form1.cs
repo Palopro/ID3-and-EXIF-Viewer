@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Drawing;
-using Mp3Lib;
-using ExifLib;
+using System.Globalization;
 using System.IO;
+using System.Windows.Forms;
+using ExifLib;
+using Mp3Lib;
 
 namespace ID3_and_EXIF_Viewer
 {
@@ -14,41 +15,42 @@ namespace ID3_and_EXIF_Viewer
             InitializeComponent();
         }
 
-        string fileName;
+
+        private string _fileName;
 
         private void ОткрытьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog()
+            var openFileDialog = new OpenFileDialog()
             {
                 Multiselect = true,
-                Filter = "аудио файлы (*.mp3)|*.mp3",
+                Filter = @"аудио файлы (*.mp3)|*.mp3",
                 RestoreDirectory = true
             };
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 label7.Text = openFileDialog.FileName;
-                SetID();
+                SetId();
 
                 try
                 {
-                    Stream fileStream = openFileDialog.OpenFile();
+                    var fileStream = openFileDialog.OpenFile();
 
-                    using (StreamReader reader = new System.IO.StreamReader(fileStream))
+                    using (new StreamReader(fileStream))
                     {
-                        foreach (string path in openFileDialog.FileNames)
+                        foreach (var path in openFileDialog.FileNames)
                         {
-                            Mp3File file = new Mp3File(path);
+                            var file = new Mp3File(path);
 
-                            fileName = path;
+                            _fileName = path;
 
-                            string artist = file.TagHandler.Artist;
-                            string album = file.TagHandler.Album;
-                            string song = file.TagHandler.Song;
-                            string num = file.TagHandler.Track;
-                            string genres = file.TagHandler.Genre;
-                            string year = file.TagHandler.Year;
-                            Image thumb = file.TagHandler.Picture;
+                            var artist = file.TagHandler.Artist;
+                            var album = file.TagHandler.Album;
+                            var song = file.TagHandler.Song;
+                            var num = file.TagHandler.Track;
+                            var genres = file.TagHandler.Genre;
+                            var year = file.TagHandler.Year;
+                            var thumb = file.TagHandler.Picture;
 
                             textBox1.Text = artist;
                             textBox2.Text = album;
@@ -65,90 +67,90 @@ namespace ID3_and_EXIF_Viewer
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("Ошибка чтения файла!");
+                    MessageBox.Show(@"Ошибка чтения файла!");
                 }
             }
             else
             {
-                MessageBox.Show("Ошибка чтения информации");
+                MessageBox.Show(@"Ошибка чтения информации");
             }
         }
-    
-        private void SetID()
+
+        private void SetId()
         {
             label1.Visible = true;
-            label1.Text = "Исполнитель";
+            label1.Text = @"Исполнитель";
             textBox1.Visible = true;
             textBox1.Clear();
 
             label2.Visible = true;
-            label2.Text = "Альбом";
+            label2.Text = @"Альбом";
             textBox2.Visible = true;
             textBox2.Clear();
 
             label3.Visible = true;
-            label3.Text = "Название";
+            label3.Text = @"Название";
             textBox3.Visible = true;
             textBox3.Clear();
 
             label4.Visible = true;
-            label4.Text = "Номер";
+            label4.Text = @"Номер";
             textBox4.Visible = true;
             textBox4.Clear();
 
             label5.Visible = true;
-            label5.Text = "Жанр";
+            label5.Text = @"Жанр";
             textBox5.Visible = true;
             textBox5.Clear();
 
             label6.Visible = true;
-            label6.Text = "Год";
+            label6.Text = @"Год";
             textBox6.Visible = true;
             textBox6.Clear();
 
             label7.Visible = true;
 
             pictureBox1.Visible = true;
-            pictureBox1.Size = new Size(128,128);
+            pictureBox1.Size = new Size(128, 128);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
-        private void SetEXIF()
+        private void SetExif()
         {
             label1.Visible = true;
-            label1.Text = "Производитель";
+            label1.Text = @"Производитель";
             textBox1.Visible = true;
             textBox1.Clear();
 
             label2.Visible = true;
-            label2.Text = "Устройство";
+            label2.Text = @"Устройство";
             textBox2.Visible = true;
             textBox2.Clear();
 
             label3.Visible = true;
-            label3.Text = "Камера";
+            label3.Text = @"Камера";
             textBox3.Visible = true;
             textBox3.Clear();
 
             label4.Visible = true;
-            label4.Text = "Дата и время";
+            label4.Text = @"Дата и время";
             textBox4.Visible = true;
             textBox4.Clear();
 
             label5.Visible = true;
-            label5.Text = "Ширина";
+            label5.Text = @"Ширина";
             textBox5.Visible = true;
             textBox6.Clear();
 
             label6.Visible = true;
-            label6.Text = "Высота";
+            label6.Text = @"Высота";
             textBox6.Visible = true;
             textBox6.Clear();
 
             label7.Visible = true;
-           
+
             pictureBox1.Visible = true;
-            pictureBox1.Size = new Size(240,180);
+            pictureBox1.Size = new Size(240, 180);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
@@ -184,18 +186,18 @@ namespace ID3_and_EXIF_Viewer
 
         private void ButtonSave_Click(object sender, EventArgs e)
         {
-            if (fileName != null)
+            if (_fileName != null)
             {
-                Mp3File targetFile = new Mp3File(@fileName);
+                var targetFile = new Mp3File(_fileName);
 
                 try
                 {
-                    string artist = textBox1.Text;
-                    string album = textBox2.Text;
-                    string song = textBox3.Text;
-                    string num = textBox4.Text;
-                    string genre = textBox5.Text;
-                    string year = textBox6.Text;
+                    var artist = textBox1.Text;
+                    var album = textBox2.Text;
+                    var song = textBox3.Text;
+                    var num = textBox4.Text;
+                    var genre = textBox5.Text;
+                    var year = textBox6.Text;
 
                     targetFile.TagHandler.Artist = artist;
                     targetFile.TagHandler.Album = album;
@@ -203,19 +205,19 @@ namespace ID3_and_EXIF_Viewer
                     targetFile.TagHandler.Track = num;
                     targetFile.TagHandler.Genre = genre;
                     targetFile.TagHandler.Year = year;
-                    
+
                     targetFile.UpdatePacked();
-                    MessageBox.Show("Сохранено");
+                    MessageBox.Show(@"Сохранено");
                 }
                 catch
                 {
-                    MessageBox.Show("Ошибка сохранения");
+                    MessageBox.Show(@"Ошибка сохранения");
                 }
             }
             else
             {
-                MessageBox.Show("Нет файла");
-            }     
+                MessageBox.Show(@"Нет файла");
+            }
         }
 
         private void открытььToolStripMenuItem_Click(object sender, EventArgs e)
@@ -224,29 +226,29 @@ namespace ID3_and_EXIF_Viewer
             OpenFileDialog dlg = new OpenFileDialog
             {
                 FileName = label7.Text,
-                Filter = "JPEG Images (*.jpg)|*.jpg"
+                Filter = @"JPEG Images (*.jpg)|*.jpg"
             };
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 label7.Text = dlg.FileName;
-                getExifData();
+                GetExifData();
                 buttonSave.Visible = false;
             }
         }
 
-        private void getExifData()
+        private void GetExifData()
         {
-
             if (!File.Exists(label7.Text))
             {
-                MessageBox.Show(this, "Пожалуйста, введите корректное имя файла", "Файл не найден", MessageBoxButtons.OK);
+                MessageBox.Show(this, @"Пожалуйста, введите корректное имя файла", @"Файл не найден",
+                    MessageBoxButtons.OK);
                 return;
             }
 
             try
             {
-                SetEXIF();
+                SetExif();
                 using (var reader = new ExifReader(label7.Text))
                 {
                     // Get the image thumbnail (if present)
@@ -260,37 +262,30 @@ namespace ID3_and_EXIF_Viewer
                             pictureBox1.Image = Image.FromStream(stream);
                     }
 
-                    string make;
-                    reader.GetTagValue<String>(ExifTags.Make, out make);
+                    reader.GetTagValue<string>(ExifTags.Make, out var make);
                     textBox1.Text = make;
 
-                    string model;
-                    reader.GetTagValue<String>(ExifTags.Model, out model);
+                    reader.GetTagValue<string>(ExifTags.Model, out var model);
                     textBox2.Text = model;
 
-                    string lensModel;
-                    reader.GetTagValue<String>(ExifTags.LensModel, out lensModel);
+                    reader.GetTagValue<string>(ExifTags.LensModel, out var lensModel);
                     textBox3.Text = lensModel;
 
-                    DateTime date;
-                    reader.GetTagValue<DateTime>(ExifTags.DateTimeOriginal, out date);
-                    textBox4.Text = date.ToString();
+                    reader.GetTagValue<DateTime>(ExifTags.DateTimeOriginal, out var date);
+                    textBox4.Text = date.ToString(CultureInfo.InvariantCulture);
 
-                    UInt32 pixelX;
-                    reader.GetTagValue<UInt32>(ExifTags.PixelXDimension, out pixelX);
-                    textBox5.Text = pixelX.ToString() + " пикселей";
+                    reader.GetTagValue<uint>(ExifTags.PixelXDimension, out var pixelX);
+                    textBox5.Text = pixelX.ToString() + @" пикселей";
 
-                    UInt32 pixelY;
-                    reader.GetTagValue<UInt32>(ExifTags.PixelYDimension, out pixelY);
-                    textBox6.Text = pixelY.ToString() + " пикселей";
+                    reader.GetTagValue<uint>(ExifTags.PixelYDimension, out var pixelY);
+                    textBox6.Text = pixelY.ToString() + @" пикселей";
                 }
             }
             catch (Exception ex)
             {
                 // Something didn't work!
-                MessageBox.Show(this, ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, ex.Message, @"Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
     }
 }
